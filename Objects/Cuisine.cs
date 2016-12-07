@@ -26,7 +26,7 @@ namespace BestRestaurants
     {
       _cuisine = Cuisine;
     }
-    public string GetString()
+    public string GetCuisine()
     {
       return _cuisine;
     }
@@ -37,7 +37,7 @@ namespace BestRestaurants
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM restaurant;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM cuisines;", conn);
       SqlDataReader rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
@@ -56,6 +56,41 @@ namespace BestRestaurants
         conn.Close();
       }
       return allCuisines;
+    }
+
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO cuisines (cuisine) OUTPUT INSERTED.id VALUES (@CuisineName);", conn);
+      SqlParameter cuisineParameter = new SqlParameter();
+      cuisineParameter.ParameterName = "@CuisineName";
+      cuisineParameter.Value = this.GetCuisine();
+      cmd.Parameters.Add(cuisineParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+      if(rdr!=null)
+      {
+        rdr.Close();
+      }
+      if(conn!=null)
+      {
+        conn.Close();
+      }
+    }
+    public static void DeleteAll()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM cuisines;", conn);
+      cmd.ExecuteNonQuery();
+      conn.Close();
     }
   }
 }

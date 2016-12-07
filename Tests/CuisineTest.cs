@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace BestRestaurants
 {
-  public class CuisineTest
+  public class CuisineTest : IDisposable
   {
     public CuisineTest()
     {
@@ -18,6 +18,20 @@ namespace BestRestaurants
       int result = Cuisine.GetAll().Count;
 
       Assert.Equal(0, result);
+    }
+    [Fact]
+    public void Test_SaveToDataBase()
+    {
+      Cuisine testCuisine = new Cuisine("Italian");
+      testCuisine.Save();
+
+      int result = Cuisine.GetAll().Count;
+
+      Assert.Equal(1, result);
+    }
+    public void Dispose()
+    {
+      Cuisine.DeleteAll();
     }
   }
 }
