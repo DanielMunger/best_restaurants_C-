@@ -34,5 +34,12 @@ namespace BestRestaurants
     {
       Restaurant.DeleteAll();
     }
+    [Fact]
+    public void Test_ReturnsTrueForSame()
+    {
+      Restaurant firstRestaurant = new Restaurant("Fire on the Mountain", 1);
+      Restaurant secondRestaurant = new Restaurant("Fire on the Mountain", 1);
+      Assert.Equal(firstRestaurant, secondRestaurant);
+    }
   }
 }

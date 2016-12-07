@@ -119,5 +119,22 @@ namespace BestRestaurants
         conn.Close();
       }
     }
+    public override bool Equals(System.Object otherRestaurant)
+    {
+      if(!(otherRestaurant is Restaurant))
+      {
+        return false;
+      }
+      else
+      {
+        Restaurant newRestaurant = (Restaurant) otherRestaurant;
+        bool restaurantIdEquality = (this.GetId() == newRestaurant.GetId());
+        bool restaurantNameEquality = (this.GetName() == newRestaurant.GetName());
+        bool restaurantCuisineIdEquality = (this.GetCuisineId() == newRestaurant.GetCuisineId());
+        return (restaurantNameEquality && restaurantCuisineIdEquality && restaurantIdEquality);
+      }
+    }
+
+    
   }
 }
