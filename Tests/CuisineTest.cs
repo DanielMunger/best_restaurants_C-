@@ -40,5 +40,22 @@ namespace BestRestaurants
       Cuisine secondCuisine = new Cuisine("Sushi");
       Assert.Equal(firstCuisine, secondCuisine);
     }
+    [Fact]
+    public void Test_IdPassesCorrectly()
+    {
+      Cuisine testCuisine = new Cuisine("Sushi");
+      int result = testCuisine.GetId();
+      Assert.Equal(0, result);
+    }
+    [Fact]
+    public void Test_Find()
+    {
+      Cuisine newCuisine = new Cuisine("Mexican");
+      Console.WriteLine(newCuisine.GetId());
+      newCuisine.Save();
+      Cuisine testCuisine = Cuisine.Find(newCuisine.GetId());
+      Console.WriteLine(testCuisine.GetId());
+      Assert.Equal(testCuisine, newCuisine);
+    }
   }
 }
