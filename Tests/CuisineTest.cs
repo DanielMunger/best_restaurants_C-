@@ -70,5 +70,19 @@ namespace BestRestaurants
       Console.WriteLine(result);
       Assert.Equal(newCuisine, result);
     }
+    [Fact]
+    public void Test_Delete()
+    {
+      Cuisine newCuisine = new Cuisine("Sushi");
+      newCuisine.Save();
+      Cuisine newCuisine2 = new Cuisine("Mexican");
+      newCuisine2.Save();
+
+      newCuisine.Delete();
+      List<Cuisine> list = Cuisine.GetAll();
+      List<Cuisine> list2 = new List<Cuisine> {newCuisine2};
+
+      Assert.Equal(list, list2);
+    }
   }
 }
