@@ -41,5 +41,21 @@ namespace BestRestaurants
       Restaurant secondRestaurant = new Restaurant("Fire on the Mountain", 1);
       Assert.Equal(firstRestaurant, secondRestaurant);
     }
+    [Fact]
+    public void Test_IdPassesCorrectly()
+    {
+      Restaurant testRestaurant = new Restaurant("Sushi", 1);
+      int result = testRestaurant.GetId();
+      Assert.Equal(0, result);
+    }
+    [Fact]
+    public void Test_Find()
+    {
+      Restaurant newRestaurant = new Restaurant("Italian", 2);
+      newRestaurant.Save();
+      Restaurant testRestaurant = Restaurant.Find(newRestaurant.GetId());
+
+      Assert.Equal(testRestaurant, newRestaurant);
+    }
   }
 }

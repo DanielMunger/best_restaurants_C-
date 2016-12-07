@@ -135,6 +135,38 @@ namespace BestRestaurants
       }
     }
 
-    
+    public static Restaurant Find(int Id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("SELECT * FROM restaurants WHERE id = @RestaurantId;", conn);
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@RestaurantId";
+      restaurantIdParameter.Value = Id.ToString();
+      cmd.Parameters.Add(restaurantIdParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int restaurantId = 0;
+      string restaurantName = null;
+      int cuisineId = 0;
+
+      while(rdr.Read())
+      {
+        restaurantId = rdr.GetInt32(0);
+        restaurantName = rdr.GetString(1);
+        cuisineId = rdr.GetInt32(2);
+      }
+      Restaurant foundRestaurant = new Restaurant(restaurantName, cuisineId, restaurantId);
+      if(rdr!=null)
+      {
+        rdr.Close();
+      }
+      if(conn!=null)
+      {
+        conn.Close();
+      }
+      return foundRestaurant;
+    }
+
   }
 }
