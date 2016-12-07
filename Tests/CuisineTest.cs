@@ -33,5 +33,12 @@ namespace BestRestaurants
     {
       Cuisine.DeleteAll();
     }
+    [Fact]
+    public void Test_ReturnsTrueForSame()
+    {
+      Cuisine firstCuisine = new Cuisine("Sushi");
+      Cuisine secondCuisine = new Cuisine("Sushi");
+      Assert.Equal(firstCuisine, secondCuisine);
+    }
   }
 }

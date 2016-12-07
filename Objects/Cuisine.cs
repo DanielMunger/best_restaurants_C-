@@ -83,6 +83,7 @@ namespace BestRestaurants
         conn.Close();
       }
     }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
@@ -91,6 +92,22 @@ namespace BestRestaurants
       SqlCommand cmd = new SqlCommand("DELETE FROM cuisines;", conn);
       cmd.ExecuteNonQuery();
       conn.Close();
+    }
+
+    public override bool Equals(System.Object otherCuisine)
+    {
+      if(!(otherCuisine is Cuisine))
+      {
+        return false;
+      }
+      else
+      {
+        Cuisine newCuisine = (Cuisine) otherCuisine;
+        bool idEquality = this.GetId() == newCuisine.GetId();
+        bool cuisineEquality = this.GetCuisine() == newCuisine.GetCuisine();
+
+        return(idEquality && cuisineEquality);
+      }
     }
   }
 }
