@@ -168,5 +168,44 @@ namespace BestRestaurants
       return foundRestaurant;
     }
 
+    public void Update(string NewRestaurantName, int NewCuisineId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE restaurants SET name = @NewRestaurantName, cuisine_id = @NewCuisine WHERE id = @RestaurantId;", conn);
+
+      SqlParameter newRestaurantNameParameter = new SqlParameter();
+      newRestaurantNameParameter.ParameterName = "@NewRestaurantName";
+      newRestaurantNameParameter.Value = NewRestaurantName;
+      cmd.Parameters.Add(newRestaurantNameParameter);
+
+      SqlParameter newCuisineIdParameter = new SqlParameter();
+      newCuisineIdParameter.ParameterName = "@NewCuisine";
+      newCuisineIdParameter.Value = NewCuisineId;
+      cmd.Parameters.Add(newCuisineIdParameter);
+
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@RestaurantId";
+      restaurantIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(restaurantIdParameter);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._name = rdr.GetString(0);
+        this._cuisine_id = rdr.GetInt32(1);
+        this._id = rdr.GetInt32(2);
+      }
+      if(rdr!=null)
+      {
+        rdr.Close();
+      }
+      if(conn!=null)
+      {
+        conn.Close();
+      }
+    }
   }
 }

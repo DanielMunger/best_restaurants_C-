@@ -57,5 +57,26 @@ namespace BestRestaurants
 
       Assert.Equal(testRestaurant, newRestaurant);
     }
+    [Fact]
+    public void Test_Update_RestaurantInDataBase()
+    {
+      string originalRestaurantName = "bob's mexican";
+      int originalRestaurantCuisine = 1;
+      Restaurant originalRestaurant = new Restaurant(originalRestaurantName, originalRestaurantCuisine);
+      originalRestaurant.Save();
+      string newRestaurantName = "Bob's sushi";
+      int newRestaurantCuisine = 2;
+      Restaurant updatedRestaurant = new Restaurant(newRestaurantName, newRestaurantCuisine);
+      originalRestaurant.Update(newRestaurantName, newRestaurantCuisine);
+      Console.WriteLine(originalRestaurant.GetId());
+      Console.WriteLine(originalRestaurant.GetName());
+      Console.WriteLine(originalRestaurant.GetCuisineId());
+
+      Restaurant foundRestaurant = Restaurant.Find(originalRestaurant.GetId());
+      Console.WriteLine(foundRestaurant.GetId());
+      Console.WriteLine(foundRestaurant.GetName());
+      Console.WriteLine(foundRestaurant.GetCuisineId());
+      Assert.Equal(foundRestaurant, originalRestaurant);
+    }
   }
 }

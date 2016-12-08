@@ -51,10 +51,10 @@ namespace BestRestaurants
     public void Test_Find()
     {
       Cuisine newCuisine = new Cuisine("Mexican");
-      Console.WriteLine(newCuisine.GetId());
+
       newCuisine.Save();
       Cuisine testCuisine = Cuisine.Find(newCuisine.GetId());
-      Console.WriteLine(testCuisine.GetId());
+
       Assert.Equal(testCuisine, newCuisine);
     }
     [Fact]
@@ -63,11 +63,11 @@ namespace BestRestaurants
       string cuisine = "sushi";
       Cuisine testCuisine =  new Cuisine(cuisine);
       testCuisine.Save();
-      Console.WriteLine(testCuisine.GetCuisine());
+
       string newCuisine = "Mexican";
       testCuisine.Update(newCuisine);
       string result = testCuisine.GetCuisine();
-      Console.WriteLine(result);
+      
       Assert.Equal(newCuisine, result);
     }
     [Fact]
